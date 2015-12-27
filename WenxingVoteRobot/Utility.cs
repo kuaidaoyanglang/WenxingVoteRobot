@@ -12,7 +12,7 @@ namespace WenxingFlash
     class Utility
     {
         const string FirefoxUA = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:{0}.0) Gecko/20100101 Firefox/{0}.0";
-        const string RandomUA = "Mozilla/5.0 ({0} NT 10.0; WOW64; rv:{3}.0) {1}/20100101 {2}/{3}.0";
+        const string RandomUA = "Mozilla/5.0 ({0} NT 6.1; WOW64; rv:{3}.0) {1}/20100101 {2}/{3}.0";
         private static string[] ChromeUA = { "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36",
             "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2225.0 Safari/537.36",
             "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.2117.157 Safari/537.36",
@@ -35,7 +35,7 @@ namespace WenxingFlash
 
         public static string RandomString(int length)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
             var random = new Random();
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
