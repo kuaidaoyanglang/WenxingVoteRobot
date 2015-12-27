@@ -116,6 +116,10 @@ namespace WenxingFlash
                             await Vote(id);
                             return;
                         }
+                        else
+                        {
+                            return;
+                        }
                     }
                 }
                 MessageBox.Show("请输入正确的网址！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
