@@ -98,6 +98,7 @@ namespace WenxingFlash
             }
 
             stopFlag = false;
+            tb_Url.Enabled = true;
             btn_Start.Enabled = true;
             btn_Start.Text = "开始";
             btn_Start.Tag = null;
