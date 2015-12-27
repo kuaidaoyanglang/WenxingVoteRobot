@@ -92,6 +92,7 @@ namespace WenxingFlash
             stopFlag = false;
             btn_Start.Enabled = true;
             btn_Start.Text = "开始";
+            btn_Start.Tag = null;
             lb_Status.Text = "刷票结束";
             lb_Operation.Text = "";
         }
@@ -129,7 +130,6 @@ namespace WenxingFlash
                 stopFlag = true;
                 btn_Start.Enabled = false;
                 btn_Start.Text = "正在停止";
-                btn_Start.Tag = null;
             }
         }
 
