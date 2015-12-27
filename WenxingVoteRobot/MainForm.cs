@@ -52,7 +52,7 @@ namespace WenxingFlash
             while (!stopFlag)
             {
                 CookieContainer cookies = new CookieContainer();
-                RecognizeResult captchaResult;
+                RecognizeResult captchaResult = new RecognizeResult();
 
                 int simulateAccess = rnd.Next(1, 3);
                 for (int i = 0; i < simulateAccess; i++)
@@ -64,14 +64,21 @@ namespace WenxingFlash
 
                 do
                 {
+                    if (stopFlag) break;
+
                     lb_Operation.Text = "正在获取验证码图像...";
                     Bitmap captcha = await Utility.HTTPGetPngAsync(userAgent, CaptchaUri, cookies);
+
+                    if (stopFlag) break;
                     await Delay();
+
                     pic_Captcha.Image = new Bitmap(captcha);
                     lb_Operation.Text = "正在识别...";
                     captchaResult = await CaptchaRecognizer.RecoginzeAsync(captcha);
                 }
                 while (captchaResult.Confidence < 0.8);
+
+                if (stopFlag) break;
 
                 lb_Operation.Text = string.Format("正在提交，验证码为 {0}", captchaResult.Value);
                 string submitResult = await Utility.HTTPGetStringAsync(userAgent, string.Format(VoteUri, id, captchaResult.Value), cookies);
@@ -89,6 +96,7 @@ namespace WenxingFlash
                     break;
                 }
             }
+
             stopFlag = false;
             btn_Start.Enabled = true;
             btn_Start.Text = "开始";
