@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.Net;
 using System.IO;
 using System.Drawing.Imaging;
-using Tesseract;
 using System.Text.RegularExpressions;
 
 namespace WenxingVoteRobot
