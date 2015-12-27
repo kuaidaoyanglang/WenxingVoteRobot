@@ -22,7 +22,7 @@ namespace WenxingVoteRobot
         public static string RandomUserAgent()
         {
             Random rnd = new Random();
-            switch (rnd.Next(0, 1))
+            switch (rnd.Next(0, 4))
             {
                 case 0:
                     return string.Format(FirefoxUA, rnd.Next(38, 42));
