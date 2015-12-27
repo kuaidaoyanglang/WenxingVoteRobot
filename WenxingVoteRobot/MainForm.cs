@@ -13,7 +13,7 @@ using System.Drawing.Imaging;
 using Tesseract;
 using System.Text.RegularExpressions;
 
-namespace WenxingFlash
+namespace WenxingVoteRobot
 {
     public partial class MainForm : Form
     {

@@ -1,4 +1,4 @@
-﻿namespace WenxingFlash
+﻿namespace WenxingVoteRobot
 {
     partial class MainForm
     {
