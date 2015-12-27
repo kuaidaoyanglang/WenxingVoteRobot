@@ -157,6 +157,10 @@ namespace WenxingFlash
 
         private void num_MaxVote_ValueChanged(object sender, EventArgs e)
         {
+            if(num_MaxVote.Value < voteCount)
+            {
+                voteCount = 0;
+            }
             UpdateProgress();
         }
 
