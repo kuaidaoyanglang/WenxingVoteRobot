@@ -67,7 +67,7 @@ namespace WenxingFlash
                     lb_Operation.Text = "正在获取验证码图像...";
                     Bitmap captcha = await Utility.HTTPGetPngAsync(userAgent, CaptchaUri, cookies);
                     await Delay();
-                    pic_Captcha.Image = captcha;
+                    pic_Captcha.Image = new Bitmap(captcha);
                     lb_Operation.Text = "正在识别...";
                     captchaResult = await CaptchaRecognizer.RecoginzeAsync(captcha);
                 }
