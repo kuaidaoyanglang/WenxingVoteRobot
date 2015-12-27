@@ -54,7 +54,7 @@ namespace WenxingFlash
                 CookieContainer cookies = new CookieContainer();
                 RecognizeResult captchaResult = new RecognizeResult();
 
-                int simulateAccess = rnd.Next(1, 3);
+                int simulateAccess = rnd.Next(1, 4);
                 for (int i = 0; i < simulateAccess; i++)
                 {
                     lb_Operation.Text = string.Format("正在模拟访问，第 {0} 次，共 {1} 次...", i + 1, simulateAccess);
