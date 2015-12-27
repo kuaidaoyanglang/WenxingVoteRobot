@@ -27,6 +27,7 @@ namespace WenxingVoteRobot
             lb_Counter.Alignment = ToolStripItemAlignment.Right;
         }
 
+        Random rnd = new Random();
         bool stopFlag = false;
         int voteCount = 0;
 
@@ -44,52 +45,79 @@ namespace WenxingVoteRobot
             }
         }
 
+        private async Task<string> GetCaptcha(CookieContainer cookies, string userAgent)
+        {
+
+            lb_Operation.Text = "正在获取验证码图像...";
+            Bitmap captcha = await Utility.HTTPGetPngAsync(userAgent, CaptchaUri, cookies);
+
+            await Delay();
+
+            using (CaptchaInput inputWindow = new CaptchaInput(captcha))
+            {
+                if(inputWindow.ShowDialog(this) == DialogResult.OK)
+                {
+                    return inputWindow.Captcha;
+                }
+                else
+                {
+                    throw new OperationCanceledException();
+                }
+            }
+        }
+
+        private async Task SimulateAccess(CookieContainer cookies, string userAgent, int id)
+        {
+            int simulateAccess = rnd.Next(1, 4);
+            for (int i = 0; i < simulateAccess; i++)
+            {
+                lb_Operation.Text = string.Format("正在模拟访问，第 {0} 次，共 {1} 次...", i + 1, simulateAccess);
+                await Utility.HTTPGetStringAsync(userAgent, string.Format(PageUri, id), cookies);
+                await Delay();
+            }
+        }
+
         private async Task Vote(int id)
         {
             lb_Status.Text = "正在刷票  ";
-            Random rnd = new Random();
+            
             string userAgent = Utility.RandomUserAgent();
+
+            CookieContainer cookies = new CookieContainer();
+            string captcha = null;
+
             while (!stopFlag)
             {
-                CookieContainer cookies = new CookieContainer();
-                RecognizeResult captchaResult = new RecognizeResult();
-
-                int simulateAccess = rnd.Next(1, 4);
-                for (int i = 0; i < simulateAccess; i++)
+                if (captcha == null)
                 {
-                    lb_Operation.Text = string.Format("正在模拟访问，第 {0} 次，共 {1} 次...", i + 1, simulateAccess);
-                    await Utility.HTTPGetStringAsync(userAgent, string.Format(PageUri, id), cookies);
-                    await Delay();
+                    captcha = await GetCaptcha(cookies, userAgent);
                 }
 
-                do
-                {
-                    if (stopFlag) break;
-
-                    lb_Operation.Text = "正在获取验证码图像...";
-                    Bitmap captcha = await Utility.HTTPGetPngAsync(userAgent, CaptchaUri, cookies);
-
-                    if (stopFlag) break;
-                    await Delay();
-
-                    pic_Captcha.Image = new Bitmap(captcha);
-                    lb_Operation.Text = "正在识别...";
-                    captchaResult = await CaptchaRecognizer.RecoginzeAsync(captcha);
-                }
-                while (captchaResult.Confidence < 0.8);
-
-                if (stopFlag) break;
-
-                lb_Operation.Text = string.Format("正在提交，验证码为 {0}", captchaResult.Value);
-                string submitResult = await Utility.HTTPGetStringAsync(userAgent, string.Format(VoteUri, id, captchaResult.Value), cookies);
+                lb_Operation.Text = string.Format("正在提交，验证码为 {0}", captcha);
+                string submitResult = await Utility.HTTPGetStringAsync(userAgent, string.Format(VoteUri, id, captcha), cookies);
                 await Delay();
 
-                bool success = submitResult.Contains("推荐成功");
-                if (success)
+                if (submitResult.Contains("推荐成功"))
                 {
                     voteCount++;
                     UpdateProgress();
                 }
+                else if(submitResult.Contains("验证码不符合"))
+                {
+                    captcha = null;
+                }
+                else
+                {
+                    throw new Exception("程序出现错误。可能是刷票途径被封。请联系作者。");
+                }
+
+                await SimulateAccess(cookies, userAgent, id);
+
+                Uri sss;
+                Uri.TryCreate("http://www.chinawenxing.com.cn/", UriKind.RelativeOrAbsolute, out sss);
+                Cookie c = cookies.GetCookies(sss)["PHPSESSID"];
+                cookies = new CookieContainer();
+                cookies.Add(c);
 
                 if (cb_MaxVote.Checked && voteCount >= num_MaxVote.Value)
                 {
@@ -170,7 +198,7 @@ namespace WenxingVoteRobot
 
         private void num_MaxVote_ValueChanged(object sender, EventArgs e)
         {
-            if(num_MaxVote.Value < voteCount)
+            if (num_MaxVote.Value < voteCount)
             {
                 voteCount = 0;
             }

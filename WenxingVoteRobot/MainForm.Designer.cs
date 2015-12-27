@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.tb_Url = new System.Windows.Forms.TextBox();
-            this.pic_Captcha = new System.Windows.Forms.PictureBox();
             this.btn_Start = new System.Windows.Forms.Button();
             this.num_Delay = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
@@ -44,7 +43,6 @@
             this.pgb_Progress = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
             this.cb_Delay = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_Captcha)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Delay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_MaxVote)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -59,14 +57,6 @@
             this.tb_Url.Name = "tb_Url";
             this.tb_Url.Size = new System.Drawing.Size(563, 23);
             this.tb_Url.TabIndex = 6;
-            // 
-            // pic_Captcha
-            // 
-            this.pic_Captcha.Location = new System.Drawing.Point(12, 20);
-            this.pic_Captcha.Name = "pic_Captcha";
-            this.pic_Captcha.Size = new System.Drawing.Size(40, 17);
-            this.pic_Captcha.TabIndex = 7;
-            this.pic_Captcha.TabStop = false;
             // 
             // btn_Start
             // 
@@ -240,7 +230,6 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.num_Delay);
             this.Controls.Add(this.btn_Start);
-            this.Controls.Add(this.pic_Captcha);
             this.Controls.Add(this.tb_Url);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
@@ -248,7 +237,6 @@
             this.MinimizeBox = false;
             this.Name = "MainForm";
             this.Text = "内部工具，切勿外传 by t123yh";
-            ((System.ComponentModel.ISupportInitialize)(this.pic_Captcha)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_Delay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_MaxVote)).EndInit();
             this.statusStrip1.ResumeLayout(false);
@@ -260,7 +248,6 @@
 
         #endregion
         private System.Windows.Forms.TextBox tb_Url;
-        private System.Windows.Forms.PictureBox pic_Captcha;
         private System.Windows.Forms.Button btn_Start;
         private System.Windows.Forms.NumericUpDown num_Delay;
         private System.Windows.Forms.Label label2;
